@@ -10,6 +10,7 @@ import CalendarPage from "./pages/CalendarPage";
 import FoodDay from "./pages/FoodDay";
 import FoodTable from "./components/FoodTable"; // 🍽️ yangi import
 import Menu from "./pages/Menu";
+import SecondMenu from "./pages/SecondMenu";
 
 function App() {
   const isLoggedIn = !!localStorage.getItem("token");
