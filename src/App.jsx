@@ -53,7 +53,8 @@ function App() {
           }
         />
 
-        <Route path="/menu" element={<Menu />} />
+        <Route path="/menu/1" element={<Menu />} />
+        <Route path="/menu/2" element={<SecondMenu />} />
       </Routes>
     </Router>
   );
