@@ -41,12 +41,15 @@ export default function Menu() {
       className="container-fluid p-3"
       style={{
         overflow: "hidden", // ❌ scroll yo‘q
-        height: "100vh", // butun ekran balandligi
-        backgroundColor: "#f8f9fa", // yumshoq fon
+        height: "100vh",
+        backgroundColor: "#f8f9fa",
       }}
     >
       {visibleFoods.length === 0 ? (
-        <div className="text-center text-danger fs-3 mt-5">
+        <div
+          className="text-center text-danger"
+          style={{ fontSize: "2vw", marginTop: "10vh" }}
+        >
           Hali taom tanlanmagan
         </div>
       ) : (
@@ -54,9 +57,9 @@ export default function Menu() {
           className="d-grid justify-content-center align-items-center"
           style={{
             height: "100%",
-            gridTemplateColumns: "repeat(4, 1fr)", // 4 ta ustun
-            gridTemplateRows: "repeat(2, 1fr)", // 2 ta qator
-            gap: "2vh", // oraliq
+            gridTemplateColumns: "repeat(4, 1fr)", // 4 ustun
+            gridTemplateRows: "repeat(2, 1fr)", // 2 qator
+            gap: "2vh",
           }}
         >
           {visibleFoods.slice(0, 8).map((food) => {
@@ -73,7 +76,7 @@ export default function Menu() {
                   height: "100%",
                   borderRadius: "1.5rem",
                   backgroundColor: "#fff",
-                  overflow: "hidden", // rasm toshib chiqmasin
+                  overflow: "hidden",
                 }}
               >
                 <img
@@ -86,27 +89,32 @@ export default function Menu() {
                   }}
                 />
                 <div
-                  className="card-body text-center p-2 d-flex flex-column justify-content-center"
+                  className="card-body text-center d-flex flex-column justify-content-center p-2"
                   style={{ height: "40%" }}
                 >
                   <h5
                     className="fw-semibold mb-1"
-                    style={{ fontSize: "1.3rem", color: "#212529" }}
+                    style={{
+                      fontSize: "1.5vw", // Taom nomi hajmi
+                      color: "#212529",
+                    }}
                   >
                     {food.name}
                   </h5>
                   <p
-                    className="mb-0 text-success fw-bold"
-                    style={{ fontSize: "1.2rem" }}
+                    className="mb-1 text-success fw-bold"
+                    style={{
+                      fontSize: "1.3vw", // Narx hajmi
+                    }}
                   >
                     {food.price?.toLocaleString()} so‘m
                   </p>
                   {food.description && (
                     <p
-                      className="text-muted mt-1"
+                      className="text-muted"
                       style={{
-                        fontSize: "0.9rem",
-                        lineHeight: "1.2rem",
+                        fontSize: "1vw", // Tavsif hajmi
+                        lineHeight: "1.3vw",
                         marginBottom: 0,
                       }}
                     >
