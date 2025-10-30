@@ -42,7 +42,7 @@ export default function Menu() {
       style={{
         overflow: "hidden", // scroll yo‘q
         height: "100vh",
-        backgroundColor: "#f8f9fa",
+        backgroundColor: "#f2f2f2", // yumshoq kulrang fon
       }}
     >
       {visibleFoods.length === 0 ? (
@@ -74,8 +74,8 @@ export default function Menu() {
                 style={{
                   width: "100%",
                   height: "100%",
+                  border: "2px solid #e0e0e0", // yumshoq chegara
                   borderRadius: "1.5rem",
-                  backgroundColor: "#fff",
                   overflow: "hidden",
                 }}
               >
