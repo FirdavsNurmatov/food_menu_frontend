@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const BASE_URL = "http://84.54.118.39:3007";
+const BASE_URL = "http://localhost:3007";
 const REFRESH_INTERVAL = 30000; // 30 soniya
 
 export default function SecondMenu() {
   const [foods, setFoods] = useState([]);
 
-  // ⚙️ Har bir televizorga qo‘lda ID berish
-  const screenId = 2; // 👈 Bu televizor 1 bo‘lsin
-  // Ikkinchi televizorda bu qiymatni 2 qilib o‘zgartirasiz
+  const screenId = 2; // 👈 Bu 2-chi televizor uchun
 
   const loadFoods = async () => {
     try {
@@ -39,18 +37,32 @@ export default function SecondMenu() {
   const visibleFoods = screenId === 1 ? firstHalf : secondHalf;
 
   return (
-    <div className="container py-1">
-      {/* <h2 className="text-center mb-5 fw-bold text-primary display-5">
-        Bugungi taomlar
-      </h2> */}
-
+    <div
+      className="container-fluid p-3"
+      style={{
+        overflow: "hidden", // scroll yo‘q
+        height: "100vh",
+        backgroundColor: "#f8f9fa",
+      }}
+    >
       {visibleFoods.length === 0 ? (
-        <div className="text-center text-danger fs-4">
+        <div
+          className="text-center text-danger"
+          style={{ fontSize: "2vw", marginTop: "10vh" }}
+        >
           Hali taom tanlanmagan
         </div>
       ) : (
-        <div className="row justify-content-center g-5">
-          {visibleFoods.map((food) => {
+        <div
+          className="d-grid justify-content-center align-items-center"
+          style={{
+            height: "100%",
+            gridTemplateColumns: "repeat(4, 1fr)", // 4 ustun
+            gridTemplateRows: "repeat(2, 1fr)", // 2 qator
+            gap: "2vh",
+          }}
+        >
+          {visibleFoods.slice(0, 8).map((food) => {
             const imageUrl = food.image?.startsWith("http")
               ? food.image
               : `${BASE_URL}/uploads/foods/${food.image}`;
@@ -58,38 +70,62 @@ export default function SecondMenu() {
             return (
               <div
                 key={food.id}
-                className="col-12 col-sm-8 col-md-6 col-lg-4 d-flex justify-content-center"
+                className="card border-0 shadow-sm"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "1.5rem",
+                  backgroundColor: "#fff",
+                  overflow: "hidden",
+                }}
               >
+                <img
+                  src={imageUrl}
+                  alt={food.name}
+                  style={{
+                    width: "100%",
+                    height: "60%",
+                    objectFit: "cover",
+                  }}
+                />
                 <div
-                  className="card shadow-lg rounded-4 border-0"
-                  style={{ width: "100%", maxWidth: "420px" }}
+                  className="card-body text-center d-flex flex-column justify-content-center p-2"
+                  style={{ height: "40%" }}
                 >
-                  <img
-                    src={imageUrl}
-                    alt={food.name}
-                    className="card-img-top"
+                  {/* 🔹 Taom nomi */}
+                  <h5
+                    className="fw-semibold mb-1"
                     style={{
-                      height: "280px",
-                      objectFit: "cover",
-                      borderTopLeftRadius: "1.5rem",
-                      borderTopRightRadius: "1.5rem",
+                      fontSize: "2vw", // avvalgidan kattaroq
+                      color: "#212529",
                     }}
-                  />
-                  <div className="card-body p-4">
-                    <div className="d-flex justify-content-between align-items-center mb-2">
-                      <h4 className="card-title mb-0 fw-semibold text-dark">
-                        {food.name}
-                      </h4>
-                      <span className="text-success fw-bold fs-5">
-                        {food.price?.toLocaleString()} so‘m
-                      </span>
-                    </div>
-                    {food.description && (
-                      <p className="card-text mt-3 text-muted fs-6">
-                        {food.description}
-                      </p>
-                    )}
-                  </div>
+                  >
+                    {food.name}
+                  </h5>
+
+                  {/* 🔹 Narxi */}
+                  <p
+                    className="mb-1 text-success fw-bold"
+                    style={{
+                      fontSize: "1.8vw", // avvalgidan kattaroq
+                    }}
+                  >
+                    {food.price?.toLocaleString()} so‘m
+                  </p>
+
+                  {/* 🔹 Tavsif */}
+                  {food.description && (
+                    <p
+                      className="text-muted"
+                      style={{
+                        fontSize: "1vw",
+                        lineHeight: "1.3vw",
+                        marginBottom: 0,
+                      }}
+                    >
+                      {food.description}
+                    </p>
+                  )}
                 </div>
               </div>
             );

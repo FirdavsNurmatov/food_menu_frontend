@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const BASE_URL = "http://84.54.118.39:3007";
+const BASE_URL = "http://localhost:3007";
 const REFRESH_INTERVAL = 30000; // 30 soniya
 
 export default function Menu() {
@@ -40,7 +40,7 @@ export default function Menu() {
     <div
       className="container-fluid p-3"
       style={{
-        overflow: "hidden", // ❌ scroll yo‘q
+        overflow: "hidden", // scroll yo‘q
         height: "100vh",
         backgroundColor: "#f8f9fa",
       }}
@@ -92,28 +92,33 @@ export default function Menu() {
                   className="card-body text-center d-flex flex-column justify-content-center p-2"
                   style={{ height: "40%" }}
                 >
+                  {/* 🔹 Taom nomi */}
                   <h5
                     className="fw-semibold mb-1"
                     style={{
-                      fontSize: "1.5vw", // Taom nomi hajmi
+                      fontSize: "2vw", // avvalgidan kattaroq
                       color: "#212529",
                     }}
                   >
                     {food.name}
                   </h5>
+
+                  {/* 🔹 Narxi */}
                   <p
                     className="mb-1 text-success fw-bold"
                     style={{
-                      fontSize: "1.3vw", // Narx hajmi
+                      fontSize: "1.8vw", // avvalgidan kattaroq
                     }}
                   >
                     {food.price?.toLocaleString()} so‘m
                   </p>
+
+                  {/* 🔹 Tavsif */}
                   {food.description && (
                     <p
                       className="text-muted"
                       style={{
-                        fontSize: "1vw", // Tavsif hajmi
+                        fontSize: "1vw",
                         lineHeight: "1.3vw",
                         marginBottom: 0,
                       }}

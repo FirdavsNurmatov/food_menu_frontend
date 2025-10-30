@@ -4,8 +4,9 @@ export const getScheduleByDate = (date) => {
   return instance.get(`/admin/schedule/${date}`);
 };
 
-export const addToSchedule = (date, foodId) => {
-  return instance.post(`/admin/schedule`, { date, foodId });
+export const addToSchedule = (data) => {
+  // data = { date, foodId, category }
+  return instance.post("/admin/schedule", data);
 };
 
 export const removeFromSchedule = (id) => {

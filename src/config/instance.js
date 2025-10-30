@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const instance = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL || "http://84.54.118.39:3007",
+  baseURL: import.meta.env.VITE_BASE_URL || "http://localhost:3007",
 });
 
 // Har bir so‘rovga token qo‘shamiz
