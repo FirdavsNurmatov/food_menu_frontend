@@ -39,7 +39,7 @@ export default function Menu() {
   const visibleFoods = screenId === 1 ? firstHalf : secondHalf;
 
   return (
-    <div className="container py-5">
+    <div className="container py-1">
       {/* <h2 className="text-center mb-5 fw-bold text-primary display-5">
         Bugungi taomlar
       </h2> */}
