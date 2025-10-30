@@ -40,9 +40,9 @@ export default function Menu() {
 
   return (
     <div className="container py-5">
-      <h2 className="text-center mb-5 fw-bold text-primary display-5">
+      {/* <h2 className="text-center mb-5 fw-bold text-primary display-5">
         Bugungi taomlar
-      </h2>
+      </h2> */}
 
       {visibleFoods.length === 0 ? (
         <div className="text-center text-danger fs-4">
