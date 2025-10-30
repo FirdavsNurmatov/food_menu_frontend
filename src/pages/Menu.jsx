@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const BASE_URL = "http://localhost:3007";
+const BASE_URL = "http://84.54.118.39:3007";
 const REFRESH_INTERVAL = 30000; // 30 soniya
 
 export default function Menu() {
