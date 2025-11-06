@@ -75,9 +75,9 @@ const FoodListModal = ({ show, onHide, selectedDate }) => {
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
           >
-            <option value="FIRST">1-taom</option>
-            <option value="SECOND">2-taom</option>
-            <option value="SALAD">Salat</option>
+            <option value="FIRST">Taomlar</option>
+            {/* <option value="SECOND">2-taom</option> */}
+            <option value="SALAD">Ichimliklar</option>
           </Form.Select>
         </Form.Group>
 
@@ -100,7 +100,7 @@ const FoodListModal = ({ show, onHide, selectedDate }) => {
         <div className="d-flex justify-content-between gap-3">
           {/* 1-taom */}
           <div className="flex-fill border p-2 rounded">
-            <h6 className="text-center text-primary">1-taom</h6>
+            <h6 className="text-center text-primary">Taomlar</h6>
             <div className="d-flex flex-wrap gap-2 justify-content-center">
               {firstFoods.length ? (
                 firstFoods.map((s) => (
@@ -119,8 +119,7 @@ const FoodListModal = ({ show, onHide, selectedDate }) => {
             </div>
           </div>
 
-          {/* 2-taom */}
-          <div className="flex-fill border p-2 rounded">
+          {/* <div className="flex-fill border p-2 rounded">
             <h6 className="text-center text-primary">2-taom</h6>
             <div className="d-flex flex-wrap gap-2 justify-content-center">
               {secondFoods.length ? (
@@ -138,11 +137,11 @@ const FoodListModal = ({ show, onHide, selectedDate }) => {
                 <p className="text-muted small text-center">Bo‘sh</p>
               )}
             </div>
-          </div>
+          </div> */}
 
-          {/* Salat */}
+          {/* Ichimliklar */}
           <div className="flex-fill border p-2 rounded">
-            <h6 className="text-center text-primary">Salat</h6>
+            <h6 className="text-center text-primary">Ichimliklar</h6>
             <div className="d-flex flex-wrap gap-2 justify-content-center">
               {saladFoods.length ? (
                 saladFoods.map((s) => (

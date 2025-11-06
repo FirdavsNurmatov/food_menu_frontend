@@ -16,7 +16,8 @@ export default function SecondMenu() {
       if (!res.ok) throw new Error("Serverdan ma'lumot olinmadi");
 
       const parsedData = await res.json();
-      const data = parsedData.map((item) => item.food);
+      const onlyDrinks = parsedData.filter((item) => item.category == "SALAD");
+      const data = onlyDrinks.map((item) => item.food);
       setFoods(data);
     } catch (error) {
       console.error("❌ Ma'lumot olishda xatolik:", error);
@@ -31,10 +32,10 @@ export default function SecondMenu() {
   }, []);
 
   // 🔹 Ma’lumotni ikkiga bo‘lish
-  const mid = Math.ceil(foods.length / 2);
-  const firstHalf = foods.slice(0, mid);
-  const secondHalf = foods.slice(mid);
-  const visibleFoods = screenId === 1 ? firstHalf : secondHalf;
+  // const mid = Math.ceil(foods.length / 2);
+  // const firstHalf = foods.slice(0, mid);
+  // const secondHalf = foods.slice(mid);
+  const visibleFoods = foods;
 
   return (
     <div
