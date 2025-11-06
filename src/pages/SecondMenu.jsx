@@ -58,7 +58,7 @@ export default function SecondMenu() {
           style={{
             height: "100%",
             gridTemplateColumns: "repeat(4, 1fr)", // 4 ustun
-            gridTemplateRows: "repeat(2, 1fr)", // 2 qator
+            gridTemplateRows: "repeat(3, 1fr)", // 2 qator
             gap: "2vh",
           }}
         >
@@ -114,7 +114,7 @@ export default function SecondMenu() {
                   </p>
 
                   {/* 🔹 Tavsif */}
-                  {food.description && (
+                  {/* {food.description && (
                     <p
                       className="text-muted"
                       style={{
@@ -125,7 +125,7 @@ export default function SecondMenu() {
                     >
                       {food.description}
                     </p>
-                  )}
+                  )} */}
                 </div>
               </div>
             );
