@@ -43,6 +43,9 @@ export default function Menu() {
     <div
       className="container-fluid p-3"
       style={{
+        backgroundImage: "url('/bg.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
         overflow: "hidden", // scroll yo‘q
         height: "100vh",
         backgroundColor: "#f2f2f2", // yumshoq kulrang fon
