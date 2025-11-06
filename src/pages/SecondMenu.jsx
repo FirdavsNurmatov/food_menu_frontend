@@ -109,10 +109,11 @@ export default function SecondMenu() {
 
                   {/* 🔹 Narxi */}
                   <p
-                    className="mb-0 text-success fw-bold position-absolute"
+                    className="mb-0 fw-bold position-absolute"
                     style={{
-                      bottom: "0vw", // pastdan biroz joy qoldiramiz
+                      bottom: "0vw",
                       fontSize: "2.7vw",
+                      color: "#003975ff", // 🔵 ko‘k rang
                     }}
                   >
                     {food.price?.toLocaleString()} so‘m

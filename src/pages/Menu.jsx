@@ -111,8 +111,9 @@ export default function Menu() {
 
                   {/* 🔹 Narxi */}
                   <p
-                    className="mb-1 text-success fw-bold"
+                    className="mb-1 fw-bold"
                     style={{
+                      color: "#003975ff", // 🔵 ko‘k rang
                       fontSize: "1.8vw", // avvalgidan kattaroq
                     }}
                   >
