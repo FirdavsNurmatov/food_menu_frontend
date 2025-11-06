@@ -59,7 +59,7 @@ export default function SecondMenu() {
           style={{
             height: "100%",
             gridTemplateColumns: "repeat(5, 1fr)", // 5 ustun
-            gridTemplateRows: "repeat(5, 1fr)", // 3 qator
+            gridTemplateRows: "repeat(4, 1fr)", // 3 qator
             gap: "2vh",
           }}
         >
