@@ -41,6 +41,9 @@ export default function SecondMenu() {
     <div
       className="container-fluid p-3"
       style={{
+        backgroundImage: "url('/bg.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
         overflow: "hidden", // scroll yo‘q
         height: "100vh",
         backgroundColor: "#f8f9fa",
