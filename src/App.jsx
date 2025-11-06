@@ -54,8 +54,8 @@ function App() {
           }
         />
 
-        <Route path="/menu/1" element={<Menu />} />
-        <Route path="/menu/2" element={<SecondMenu />} />
+        <Route path="/menu/2" element={<Menu />} />
+        <Route path="/menu/1" element={<SecondMenu />} />
       </Routes>
     </Router>
   );
