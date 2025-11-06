@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-// const BASE_URL = "http://84.54.118.39:3007";
-const BASE_URL = "http://localhost:3007";
+const BASE_URL = "http://84.54.118.39:3007";
 const REFRESH_INTERVAL = 30000; // 30 soniya
 
 export default function Menu() {
@@ -60,8 +59,8 @@ export default function Menu() {
           className="d-grid justify-content-center align-items-center"
           style={{
             height: "100%",
-            gridTemplateColumns: "repeat(4, 1fr)", // 4 ustun
-            gridTemplateRows: "repeat(3, 1fr)", // 2 qator
+            gridTemplateColumns: "repeat(5, 1fr)", // 5 ustun
+            gridTemplateRows: "repeat(3, 1fr)", // 3 qator
             gap: "2vh",
           }}
         >
@@ -73,7 +72,7 @@ export default function Menu() {
             return (
               <div
                 key={food.id}
-                className="card border-0 shadow-sm"
+                className="card border-2 shadow-sm"
                 style={{
                   width: "100%",
                   height: "100%",
