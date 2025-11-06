@@ -90,14 +90,14 @@ export default function SecondMenu() {
                   }}
                 /> */}
                 <div
-                  className="card-body text-center d-flex flex-column justify-content-center p-2"
+                  className="card-body text-center position-relative p-2 d-flex flex-column align-items-center"
                   style={{ height: "40%" }}
                 >
                   {/* 🔹 Taom nomi */}
                   <h5
                     className="fw-semibold mb-1"
                     style={{
-                      fontSize: "2vw", // avvalgidan kattaroq
+                      fontSize: "2.7vw",
                       color: "#212529",
                     }}
                   >
@@ -106,27 +106,14 @@ export default function SecondMenu() {
 
                   {/* 🔹 Narxi */}
                   <p
-                    className="mb-1 text-success fw-bold"
+                    className="mb-0 text-success fw-bold position-absolute"
                     style={{
-                      fontSize: "1.8vw", // avvalgidan kattaroq
+                      bottom: "0vw", // pastdan biroz joy qoldiramiz
+                      fontSize: "2.7vw",
                     }}
                   >
                     {food.price?.toLocaleString()} so‘m
                   </p>
-
-                  {/* 🔹 Tavsif */}
-                  {/* {food.description && (
-                    <p
-                      className="text-muted"
-                      style={{
-                        fontSize: "1vw",
-                        lineHeight: "1.3vw",
-                        marginBottom: 0,
-                      }}
-                    >
-                      {food.description}
-                    </p>
-                  )} */}
                 </div>
               </div>
             );
