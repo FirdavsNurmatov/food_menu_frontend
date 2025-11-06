@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const BASE_URL = "http://84.54.118.39:3007";
+// const BASE_URL = "http://84.54.118.39:3007";
+const BASE_URL = "http://localhost:3007";
 const REFRESH_INTERVAL = 30000; // 30 soniya
 
 export default function Menu() {
@@ -15,8 +16,10 @@ export default function Menu() {
       const res = await fetch(`${BASE_URL}/foods/${today}`);
       if (!res.ok) throw new Error("Serverdan ma'lumot olinmadi");
 
+      
       const parsedData = await res.json();
       const data = parsedData.map((item) => item.food);
+      console.log(data);
       setFoods(data);
     } catch (error) {
       console.error("❌ Ma'lumot olishda xatolik:", error);
