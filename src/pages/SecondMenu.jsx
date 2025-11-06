@@ -59,7 +59,7 @@ export default function SecondMenu() {
           style={{
             height: "100%",
             gridTemplateColumns: "repeat(5, 1fr)", // 5 ustun
-            gridTemplateRows: "repeat(3, 1fr)", // 3 qator
+            gridTemplateRows: "repeat(5, 1fr)", // 3 qator
             gap: "2vh",
           }}
         >
@@ -80,7 +80,7 @@ export default function SecondMenu() {
                   overflow: "hidden",
                 }}
               >
-                <img
+                {/* <img
                   src={imageUrl}
                   alt={food.name}
                   style={{
@@ -88,7 +88,7 @@ export default function SecondMenu() {
                     height: "60%",
                     objectFit: "cover",
                   }}
-                />
+                /> */}
                 <div
                   className="card-body text-center d-flex flex-column justify-content-center p-2"
                   style={{ height: "40%" }}
