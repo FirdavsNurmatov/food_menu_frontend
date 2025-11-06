@@ -95,14 +95,15 @@ export default function Menu() {
                   }}
                 />
                 <div
-                  className="card-body text-center d-flex flex-column justify-content-center p-2"
-                  style={{ height: "40%" }}
+                  className="card-body text-center position-relative  d-flex flex-column align-items-center"
+                  style={{ height: "50%" }}
                 >
                   {/* 🔹 Taom nomi */}
                   <h5
-                    className="fw-semibold mb-1"
+                    className="fw-semibold mb-1 position-absolute"
                     style={{
-                      fontSize: "2vw", // avvalgidan kattaroq
+                      top:'0vw',
+                      fontSize: "2.7vw",
                       color: "#212529",
                     }}
                   >
@@ -111,28 +112,15 @@ export default function Menu() {
 
                   {/* 🔹 Narxi */}
                   <p
-                    className="mb-1 fw-bold"
+                    className="mb-0 fw-bold position-absolute"
                     style={{
+                      bottom: "0vw",
+                      fontSize: "2.7vw",
                       color: "#003975ff", // 🔵 ko‘k rang
-                      fontSize: "1.8vw", // avvalgidan kattaroq
                     }}
                   >
                     {food.price?.toLocaleString()} so‘m
                   </p>
-
-                  {/* 🔹 Tavsif */}
-                  {/* {food.description && (
-                    <p
-                      className="text-muted"
-                      style={{
-                        fontSize: "1vw",
-                        lineHeight: "1.3vw",
-                        marginBottom: 0,
-                      }}
-                    >
-                      {food.description}
-                    </p>
-                  )} */}
                 </div>
               </div>
             );
