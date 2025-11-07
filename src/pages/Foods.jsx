@@ -76,7 +76,7 @@ export default function Foods() {
                   flexDirection: "column",
                 }}
               >
-                {imageUrl && (
+                {food.image && (
                   <img
                     src={imageUrl}
                     style={{
