@@ -78,7 +78,6 @@ export default function Foods() {
               >
                 <img
                   src={imageUrl}
-                  alt={food.name}
                   style={{
                     width: "100%",
                     height: "40%",
