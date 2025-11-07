@@ -1,41 +1,30 @@
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const BASE_URL = "http://84.54.118.39:3007";
+const BASE_URL = import.meta.env.VITE_BASE_URL || "http://84.54.118.39:3007";
 const REFRESH_INTERVAL = 30000; // 30 soniya
 
-export default function SecondMenu() {
-  const [foods, setFoods] = useState([]);
+export default function Drinks() {
+  const [drinks, setDrinks] = useState([]);
 
-  const screenId = 2; // 👈 Bu 2-chi televizor uchun
-
-  const loadFoods = async () => {
+  const loaddrinks = async () => {
     try {
-      const today = new Date().toISOString().split("T")[0];
-      const res = await fetch(`${BASE_URL}/foods/${today}`);
+      const res = await fetch(`${BASE_URL}/drinks`);
       if (!res.ok) throw new Error("Serverdan ma'lumot olinmadi");
 
       const parsedData = await res.json();
-      const onlyDrinks = parsedData.filter((item) => item.category == "SALAD");
-      const data = onlyDrinks.map((item) => item.food);
-      setFoods(data);
+      setDrinks(parsedData);
     } catch (error) {
       console.error("❌ Ma'lumot olishda xatolik:", error);
-      setFoods([]);
+      setDrinks([]);
     }
   };
 
   useEffect(() => {
-    loadFoods();
-    const refreshTimer = setInterval(loadFoods, REFRESH_INTERVAL);
+    loaddrinks();
+    const refreshTimer = setInterval(loaddrinks, REFRESH_INTERVAL);
     return () => clearInterval(refreshTimer);
   }, []);
-
-  // 🔹 Ma’lumotni ikkiga bo‘lish
-  // const mid = Math.ceil(foods.length / 2);
-  // const firstHalf = foods.slice(0, mid);
-  // const secondHalf = foods.slice(mid);
-  const visibleFoods = foods;
 
   return (
     <div
@@ -49,7 +38,7 @@ export default function SecondMenu() {
         backgroundColor: "#f8f9fa",
       }}
     >
-      {visibleFoods.length === 0 ? (
+      {drinks.length === 0 ? (
         <div
           className="text-center text-danger"
           style={{ fontSize: "2vw", marginTop: "10vh" }}
@@ -66,11 +55,7 @@ export default function SecondMenu() {
             gap: "2vh",
           }}
         >
-          {visibleFoods.slice(0, 8).map((food) => {
-            const imageUrl = food.image?.startsWith("http")
-              ? food.image
-              : `${BASE_URL}/uploads/foods/${food.image}`;
-
+          {drinks.map((food) => {
             return (
               <div
                 key={food.id}
@@ -83,15 +68,6 @@ export default function SecondMenu() {
                   overflow: "hidden",
                 }}
               >
-                {/* <img
-                  src={imageUrl}
-                  alt={food.name}
-                  style={{
-                    width: "100%",
-                    height: "60%",
-                    objectFit: "cover",
-                  }}
-                /> */}
                 <div
                   className="card-body text-center position-relative p-2 d-flex flex-column align-items-center"
                   style={{ height: "40%" }}

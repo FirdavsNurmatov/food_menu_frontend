@@ -5,7 +5,7 @@ export const getScheduleByDate = (date) => {
 };
 
 export const addToSchedule = (data) => {
-  // data = { date, foodId, category }
+  // data = { date, foodId }
   return instance.post("/admin/schedule", data);
 };
 

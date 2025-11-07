@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const BASE_URL = "http://84.54.118.39:3007";
+const BASE_URL = import.meta.env.VITE_BASE_URL || "http://84.54.118.39:3007";
 const REFRESH_INTERVAL = 30000; // 30 soniya
 
-export default function Menu() {
+export default function Foods() {
   const [foods, setFoods] = useState([]);
-
-  // const screenId = 1; // 👈 Har televizor uchun o‘zgartiriladi
 
   const loadFoods = async () => {
     try {
@@ -16,10 +14,7 @@ export default function Menu() {
       if (!res.ok) throw new Error("Serverdan ma'lumot olinmadi");
 
       const parsedData = await res.json();
-      const onlyFoods = parsedData.filter(
-        (item) => item.category == "FIRST" || item.category == "SECOND"
-      );
-      const data = onlyFoods.map((item) => item.food);
+      const data = parsedData.map((item) => item.food);
       setFoods(data);
     } catch (error) {
       console.error("❌ Ma'lumot olishda xatolik:", error);
@@ -33,12 +28,6 @@ export default function Menu() {
     return () => clearInterval(refreshTimer);
   }, []);
 
-  // 🔹 Ma’lumotni ikkiga bo‘lish
-  // const mid = Math.ceil(foods.length / 2);
-  // const firstHalf = foods.slice(0, mid);
-  // const secondHalf = foods.slice(mid);
-  const visibleFoods = foods;
-
   return (
     <div
       className="container-fluid p-3"
@@ -46,12 +35,12 @@ export default function Menu() {
         backgroundImage: "url('/bg.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        overflow: "hidden", // scroll yo‘q
+        overflow: "hidden",
         height: "100vh",
-        backgroundColor: "#f2f2f2", // yumshoq kulrang fon
+        backgroundColor: "#f2f2f2",
       }}
     >
-      {visibleFoods.length === 0 ? (
+      {foods.length === 0 ? (
         <div
           className="text-center text-danger"
           style={{ fontSize: "2vw", marginTop: "10vh" }}
@@ -63,12 +52,12 @@ export default function Menu() {
           className="d-grid justify-content-center align-items-center"
           style={{
             height: "100%",
-            gridTemplateColumns: "repeat(5, 1fr)", // 5 ustun
-            gridTemplateRows: "repeat(3, 1fr)", // 3 qator
+            gridTemplateColumns: "repeat(5, 1fr)",
+            gridTemplateRows: "repeat(3, 1fr)",
             gap: "2vh",
           }}
         >
-          {visibleFoods.slice(0, 8).map((food) => {
+          {foods.map((food) => {
             const imageUrl = food.image?.startsWith("http")
               ? food.image
               : `${BASE_URL}/uploads/foods/${food.image}`;
@@ -80,9 +69,11 @@ export default function Menu() {
                 style={{
                   width: "100%",
                   height: "100%",
-                  border: "2px solid #e0e0e0", // yumshoq chegara
+                  border: "2px solid #e0e0e0",
                   borderRadius: "1.5rem",
                   overflow: "hidden",
+                  display: "flex",
+                  flexDirection: "column",
                 }}
               >
                 <img
@@ -90,21 +81,22 @@ export default function Menu() {
                   alt={food.name}
                   style={{
                     width: "100%",
-                    height: "60%",
+                    height: "40%",
                     objectFit: "cover",
                   }}
                 />
                 <div
-                  className="card-body text-center position-relative  d-flex flex-column align-items-center"
-                  style={{ height: "50%" }}
+                  className="card-body d-flex flex-column justify-content-between align-items-center text-center"
+                  style={{ height: "40%", padding: "0rem" }}
                 >
                   {/* 🔹 Taom nomi */}
                   <h5
-                    className="fw-semibold mb-1 position-absolute"
+                    className="fw-semibold mb-1"
                     style={{
-                      top:'0vw',
-                      fontSize: "2.7vw",
+                      fontSize: "2.1vw",
                       color: "#212529",
+                      textAlign: "center",
+                      wordBreak: "break-word",
                     }}
                   >
                     {food.name}
@@ -112,11 +104,11 @@ export default function Menu() {
 
                   {/* 🔹 Narxi */}
                   <p
-                    className="mb-0 fw-bold position-absolute"
+                    className="mb-0 fw-bold"
                     style={{
-                      bottom: "0vw",
                       fontSize: "2.7vw",
-                      color: "#003975ff", // 🔵 ko‘k rang
+                      color: "#003975ff",
+                      textAlign: "center",
                     }}
                   >
                     {food.price?.toLocaleString()} so‘m

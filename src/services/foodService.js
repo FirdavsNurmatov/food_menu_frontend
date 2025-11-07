@@ -2,7 +2,7 @@
 import { instance } from "../config/instance";
 
 // 🍽️ Barcha taomlarni olish
-export const getFoods = () => instance.get("/admin");
+export const getFoods = (category) => instance.get(`/admin${category || ""}`);
 
 // 🍲 Bitta taomni olish
 export const getFoodById = (id) => instance.get(`/admin/${id}`);

@@ -9,8 +9,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import CalendarPage from "./pages/CalendarPage";
 import FoodDay from "./pages/FoodDay";
 import FoodTable from "./components/FoodTable"; // 🍽️ yangi import
-import Menu from "./pages/Menu";
-import SecondMenu from "./pages/SecondMenu";
+import Drinks from "./pages/Drinks";
+import Foods from "./pages/Foods";
 
 function App() {
   const isLoggedIn = !!localStorage.getItem("token");
@@ -54,8 +54,8 @@ function App() {
           }
         />
 
-        <Route path="/menu/2" element={<Menu />} />
-        <Route path="/menu/1" element={<SecondMenu />} />
+        <Route path="/menu/1" element={<Drinks />} />
+        <Route path="/menu/2" element={<Foods />} />
       </Routes>
     </Router>
   );
