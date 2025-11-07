@@ -21,8 +21,10 @@ const FoodDay = () => {
   return (
     <div className="container my-3">
       <h2>Menyu {date}</h2>
-      {schedule.map(s => (
-        <div key={s.id}>{s.food.name} - {s.food.price} so'm</div>
+      {schedule.map((s) => (
+        <div key={s.id}>
+          {s.food.name} - {s.food.price} сўм
+        </div>
       ))}
     </div>
   );
