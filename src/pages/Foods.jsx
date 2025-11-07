@@ -76,14 +76,16 @@ export default function Foods() {
                   flexDirection: "column",
                 }}
               >
-                <img
-                  src={imageUrl}
-                  style={{
-                    width: "100%",
-                    height: "40%",
-                    objectFit: "cover",
-                  }}
-                />
+                {imageUrl && (
+                  <img
+                    src={imageUrl}
+                    style={{
+                      width: "100%",
+                      height: "40%",
+                      objectFit: "cover",
+                    }}
+                  />
+                )}
                 <div
                   className="card-body d-flex flex-column justify-content-between align-items-center text-center"
                   style={{ height: "40%", padding: "0rem" }}
