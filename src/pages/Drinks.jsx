@@ -92,7 +92,7 @@ export default function Drinks() {
                       color: "#003975ff", // 🔵 ko‘k rang
                     }}
                   >
-                    {food.price?.toLocaleString()} so‘m
+                    {food.price?.toLocaleString()} {"сўм"}
                   </p>
                 </div>
               </div>

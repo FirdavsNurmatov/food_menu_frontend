@@ -111,7 +111,7 @@ export default function Foods() {
                       textAlign: "center",
                     }}
                   >
-                    {food.price?.toLocaleString()} so‘m
+                    {food.price?.toLocaleString()} {"сўм"}
                   </p>
                 </div>
               </div>

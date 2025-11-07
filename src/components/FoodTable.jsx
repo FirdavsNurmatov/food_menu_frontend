@@ -208,7 +208,7 @@ const FoodTable = () => {
                     {food.description || "Tavsif mavjud emas"}
                   </Card.Text>
                   <h5 className="fw-semibold text-success">
-                    {food.price?.toLocaleString()} сўм
+                    {food.price?.toLocaleString()} {"сўм"}
                   </h5>
                 </div>
                 <div className="d-flex justify-content-end mt-3">
