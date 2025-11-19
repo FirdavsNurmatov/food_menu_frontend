@@ -53,8 +53,8 @@ export default function Foods() {
           style={{
             height: "100%",
             gridTemplateColumns: "repeat(5, 1fr)",
-            gridTemplateRows: "repeat(3, 1fr)",
-            gap: "2vh",
+            gridTemplateRows: `repeat(${Math.ceil(foods.length / 5)}, 1fr)`,
+            gap: "1vh",
           }}
         >
           {foods.map((food) => {
@@ -88,24 +88,38 @@ export default function Foods() {
                 )}
                 <div
                   className="card-body d-flex flex-column justify-content-between align-items-center text-center"
-                  style={{ height: "40%", padding: "0rem" }}
+                  style={{ height: "40%", padding: "0" }}
                 >
                   {/* 🔹 Taom nomi */}
-                  <h5
-                    className="fw-semibold mb-1"
-                    style={{
-                      fontSize: "2.1vw",
-                      color: "#212529",
-                      textAlign: "center",
-                      wordBreak: "break-word",
-                    }}
-                  >
-                    {food.name}
-                  </h5>
+                  {food.name.split(" ").length > 2 ? (
+                    <h5
+                      className="fw-semibold mb-1"
+                      style={{
+                        fontSize: "clamp(14px, 2vw, 28px)", // avtomatik fit bo‘ladi
+                        color: "#212529",
+                        textAlign: "center",
+                        wordBreak: "break-word",
+                      }}
+                    >
+                      {food.name}
+                    </h5>
+                  ) : (
+                    <h5
+                      className="fw-semibold mb-1"
+                      style={{
+                        fontSize: "2.1vw",
+                        color: "#212529",
+                        textAlign: "center",
+                        wordBreak: "break-word",
+                      }}
+                    >
+                      {food.name}
+                    </h5>
+                  )}
 
                   {/* 🔹 Narxi */}
                   <p
-                    className="mb-0 fw-bold"
+                    className="mb-0 fw-bold position-absolute bottom-0"
                     style={{
                       fontSize: "2.7vw",
                       color: "#003975ff",
