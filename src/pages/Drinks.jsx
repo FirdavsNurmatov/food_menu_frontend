@@ -55,7 +55,7 @@ export default function Drinks() {
             {drinks.map((drink) => {
               const img = drink.image?.startsWith("http")
                 ? drink.image
-                : `${BASE_URL}/uploads/drinks/${drink.image}`;
+                : `${BASE_URL}/uploads/foods/${drink.image}`;
 
               return (
                 <div
