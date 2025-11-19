@@ -199,6 +199,19 @@ const FoodTable = () => {
                 (e.currentTarget.style.transform = "scale(1)")
               }
             >
+              {food.image && (
+                <Card.Img
+                  variant="top"
+                  src={`${BASE_URL}/uploads/foods/${food.image}`}
+                  alt={food.name}
+                  style={{
+                    height: "200px",
+                    objectFit: "cover",
+                    borderTopLeftRadius: "16px",
+                    borderTopRightRadius: "16px",
+                  }}
+                />
+              )}
               <Card.Body className="d-flex flex-column justify-content-between">
                 <div>
                   <Card.Title className="text-capitalize">

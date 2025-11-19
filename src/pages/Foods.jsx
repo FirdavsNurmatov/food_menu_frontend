@@ -301,8 +301,6 @@ export default function Foods() {
                           {food.price?.toLocaleString()} {"сўм"}
                         </span>
                       </div>
-
-                      {/* ⭐ STAR ICON (SVG) */}
                     </div>
                   </div>
                 </div>

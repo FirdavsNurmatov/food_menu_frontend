@@ -149,6 +149,15 @@ const FoodForm = ({ food, onSuccess, isEdit }) => {
             />
           </Form.Group>
 
+          <Form.Group className="mb-3">
+            <Form.Label>Sur'at</Form.Label>
+            <Form.Control
+              type="file"
+              accept="image/*"
+              onChange={(e) => setImage(e.target.files[0])}
+            />
+          </Form.Group>
+
           <Button variant="primary" type="submit">
             Yakunlash
           </Button>

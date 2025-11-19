@@ -7,7 +7,7 @@ const REFRESH_INTERVAL = 30000; // 30 soniya
 export default function Drinks() {
   const [drinks, setDrinks] = useState([]);
 
-  const loaddrinks = async () => {
+  const loadDrinks = async () => {
     try {
       const res = await fetch(`${BASE_URL}/drinks`);
       if (!res.ok) throw new Error("Serverdan ma'lumot olinmadi");
@@ -21,85 +21,126 @@ export default function Drinks() {
   };
 
   useEffect(() => {
-    loaddrinks();
-    const refreshTimer = setInterval(loaddrinks, REFRESH_INTERVAL);
+    loadDrinks();
+    const refreshTimer = setInterval(loadDrinks, REFRESH_INTERVAL);
     return () => clearInterval(refreshTimer);
   }, []);
 
   return (
     <div
-      className="container-fluid p-3"
       style={{
-        backgroundImage: "url('/bg.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        overflow: "hidden", // scroll yo‘q
         height: "100vh",
-        backgroundColor: "#f8f9fa",
+        background: "linear-gradient(135deg, #0f172a, #1e293b, #0f172a)",
+        overflow: "hidden",
       }}
     >
-      {drinks.length === 0 ? (
-        <div
-          className="text-center text-danger"
-          style={{ fontSize: "2vw", marginTop: "10vh" }}
-        >
-          Hali taom tanlanmagan
-        </div>
-      ) : (
-        <div
-          className="d-grid justify-content-center align-items-center"
-          style={{
-            height: "100%",
-            gridTemplateColumns: "repeat(5, 1fr)", // 5 ustun
-            gridTemplateRows: "repeat(4, 1fr)", // 3 qator
-            gap: "2vh",
-          }}
-        >
-          {drinks.map((food) => {
-            return (
-              <div
-                key={food.id}
-                className="card border-2 shadow-sm"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: "1.5rem",
-                  backgroundColor: "#fff",
-                  overflow: "hidden",
-                }}
-              >
-                <div
-                  className="card-body text-center position-relative p-2 d-flex flex-column align-items-center"
-                  style={{ height: "40%" }}
-                >
-                  {/* 🔹 Taom nomi */}
-                  <h5
-                    className="fw-semibold mb-1"
-                    style={{
-                      fontSize: "2.7vw",
-                      color: "#212529",
-                    }}
-                  >
-                    {food.name}
-                  </h5>
+      <div className="container-fluid py-3" style={{ height: "100%" }}>
+        {drinks.length === 0 ? (
+          <div
+            className="text-center"
+            style={{ fontSize: "2.5rem", marginTop: "10vh", color: "#f87171" }}
+          >
+            Hali ichimlik tanlanmagan
+          </div>
+        ) : (
+          <div
+            className="row g-3 h-100"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(5, 1fr)",
+              gridAutoRows: "1fr",
+              gap: "0.5rem",
+            }}
+          >
+            {drinks.map((drink) => {
+              const img = drink.image?.startsWith("http")
+                ? drink.image
+                : `${BASE_URL}/uploads/drinks/${drink.image}`;
 
-                  {/* 🔹 Narxi */}
-                  <p
-                    className="mb-0 fw-bold position-absolute"
+              return (
+                <div
+                  key={drink.id}
+                  className="card position-relative shadow-lg"
+                  style={{
+                    overflow: "hidden",
+                    borderRadius: "18px",
+                    background: "linear-gradient(135deg, #1f2937, #111827)",
+                    border: "1px solid #374151",
+                    padding: "1px",
+                  }}
+                >
+                  {/* DARK OVERLAY */}
+                  <div
+                    className="position-absolute w-100 h-100"
                     style={{
-                      bottom: "0vw",
-                      fontSize: "2.7vw",
-                      color: "#003975ff", // 🔵 ko‘k rang
+                      top: 0,
+                      left: 0,
+                      background:
+                        "linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.5), transparent)",
+                      zIndex: 2,
+                    }}
+                  ></div>
+
+                  {/* IMAGE */}
+                  <div style={{ overflow: "hidden" }}>
+                    <img
+                      src={img}
+                      alt={drink.name}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </div>
+
+                  {/* TEXTS */}
+                  <div
+                    className="position-absolute w-100 px-3 pb-2"
+                    style={{
+                      bottom: 0,
+                      zIndex: 10,
                     }}
                   >
-                    {food.price?.toLocaleString()} {"сўм"}
-                  </p>
+                    <h3
+                      style={{
+                        color: "white",
+                        fontSize: "2rem",
+                        margin: 0,
+                        fontWeight: "bold",
+                        textShadow: "0px 0px 6px black",
+                      }}
+                    >
+                      {drink.name}
+                    </h3>
+
+                    <div className="d-flex justify-content-between align-items-center mt-2">
+                      <div
+                        style={{
+                          background:
+                            "linear-gradient(90deg, #f59e0b, #ea580c)",
+                          padding: "2px 8px",
+                          borderRadius: "10px",
+                        }}
+                      >
+                        <span
+                          style={{
+                            color: "white",
+                            fontWeight: "900",
+                            fontSize: "2rem",
+                          }}
+                        >
+                          {drink.price?.toLocaleString()} {"сўм"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
