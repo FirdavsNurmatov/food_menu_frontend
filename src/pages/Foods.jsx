@@ -137,6 +137,7 @@
 //     </div>
 //   );
 // }
+
 import { useEffect, useState } from "react";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL || "http://84.54.118.39:3007";
@@ -176,25 +177,37 @@ export default function Foods() {
       }}
     >
       {/* ==================== GRID ==================== */}
-      <div className="container-fluid py-3" style={{ height: "100%" }}>
+      <div
+        className="container-fluid"
+        style={{
+          height: "100%",
+          padding: "clamp(0.3rem, 0.5vw, 0.8rem)",
+        }}
+      >
         {foods.length === 0 ? (
           <div
             className="text-center"
-            style={{ fontSize: "2.5rem", marginTop: "10vh", color: "#f87171" }}
+            style={{
+              fontSize: "clamp(1.5rem, 4vw, 2.5rem)",
+              marginTop: "10vh",
+              color: "#f87171",
+              padding: "0 1rem",
+            }}
           >
             Hali taom tanlanmagan
           </div>
         ) : (
           <div
-            className="row g-3 h-100"
+            className="h-100"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(5, 1fr)",
-              gridAutoRows: "1fr",
-              gap: "0.5rem",
+              gridTemplateRows: "repeat(4, 1fr)",
+              gap: "clamp(0.25rem, 0.3vw, 0.5rem)",
+              padding: "clamp(0.25rem, 0.4vw, 0.6rem)",
             }}
           >
-            {foods.map((food, index) => {
+            {foods.slice(0, 20).map((food) => {
               const img = food.image?.startsWith("http")
                 ? food.image
                 : `${BASE_URL}/uploads/foods/${food.image}`;
@@ -238,10 +251,12 @@ export default function Foods() {
 
                   {/* TEXTS */}
                   <div
-                    className="position-absolute w-100 px-3 pb-2"
+                    className="position-absolute w-100"
                     style={{
                       bottom: 0,
                       zIndex: 10,
+                      padding:
+                        "clamp(0.4rem, 0.6vw, 0.7rem) clamp(0.6rem, 0.8vw, 1rem) clamp(0.4rem, 0.6vw, 0.7rem)",
                     }}
                   >
                     {/* {food.name.split(" ").length > 2 ? (
@@ -273,7 +288,7 @@ export default function Foods() {
                     <h3
                       style={{
                         color: "white",
-                        fontSize: "2rem",
+                        fontSize: "clamp(1.1rem, 1.55vw, 1.5rem)", // yana + biroz kattalashtirildi
                         margin: 0,
                         fontWeight: "bold",
                         textShadow: "0px 0px 6px black",
@@ -282,20 +297,31 @@ export default function Foods() {
                       {food.name}
                     </h3>
 
-                    <div className="d-flex justify-content-between align-items-center mt-2">
+                    <div
+                      className="d-flex justify-content-between align-items-center"
+                      style={{ marginTop: "clamp(0.2rem, 0.3vw, 0.4rem)" }}
+                    >
                       <div
                         style={{
                           background:
                             "linear-gradient(90deg, #f59e0b, #ea580c)",
-                          padding: "2px 8px",
-                          borderRadius: "10px",
+                          padding:
+                            "clamp(2px, 0.2vw, 4px) clamp(4px, 0.4vw, 8px)",
+                          borderRadius: "clamp(4px, 0.4vw, 6px)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          whiteSpace: "nowrap",
+                          minWidth: "max-content",
                         }}
                       >
                         <span
                           style={{
                             color: "white",
                             fontWeight: "900",
-                            fontSize: "2rem",
+                            fontSize: "clamp(1.1rem, 1.55vw, 1.5rem)", // yana + biroz kattalashtirildi
+                            whiteSpace: "nowrap",
+                            display: "inline-block",
                           }}
                         >
                           {food.price?.toLocaleString()} {"сўм"}
