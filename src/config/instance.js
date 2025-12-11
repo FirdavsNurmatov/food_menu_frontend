@@ -7,8 +7,7 @@ export const instance = axios.create({
 // Har bir so‘rovga token qo‘shamiz
 instance.interceptors.request.use(
   (config) => {
-    const data = JSON.parse(localStorage.getItem("auth") || "{}");
-    const token = data?.state?.token || localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
@@ -23,7 +22,10 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401 || error.response?.data?.message === "jwt expired") {
+    if (
+      error.response?.status === 401 ||
+      error.response?.data?.message === "jwt expired"
+    ) {
       localStorage.removeItem("auth");
       localStorage.removeItem("token");
       window.location.href = "/";
