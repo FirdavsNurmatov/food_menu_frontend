@@ -6,23 +6,44 @@ const REFRESH_INTERVAL = 30000; // 30 soniya
 
 export default function Drinks() {
   const [drinks, setDrinks] = useState([]);
+  const [loading, setLoading] = useState(true); // Yuklanish holati
+  const [error, setError] = useState(null); // Xatolik xabari uchun
 
-  const loadDrinks = async () => {
+  const loadDrinks = async (showLoadingAnimation = false) => {
+    // Agar birinchi yuklanish yoki xatolikdan keyin qayta urinish bo'lsa spinnerni yoqamiz
+    if (showLoadingAnimation) setLoading(true);
+
     try {
       const res = await fetch(`${BASE_URL}/drinks`);
-      if (!res.ok) throw new Error("Serverdan ma'lumot olinmadi");
+      if (!res.ok) {
+        throw new Error(`Server xatosi: ${res.status}. Ma'lumot olinmadi`);
+      }
 
       const parsedData = await res.json();
       setDrinks(parsedData);
+      setError(null); // Muvaffaqiyatli bo'lsa xatolikni tozalaymiz
     } catch (error) {
       console.error("❌ Ma'lumot olishda xatolik:", error);
-      setDrinks([]);
+      // Internet uzilganini yoki server xatosini aniqlash
+      setError(
+        error.message === "Failed to fetch"
+          ? "Internet bilan aloqa uzildi. Serverga ulanib bo'lmadi."
+          : error.message,
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    loadDrinks();
-    const refreshTimer = setInterval(loadDrinks, REFRESH_INTERVAL);
+    // Dastlabki yuklanishda loader ko'rinishi uchun true yuboramiz
+    loadDrinks(true);
+
+    const refreshTimer = setInterval(() => {
+      // Har 30 soniyada fonda jimgina yangilash uchun false yuboramiz
+      loadDrinks(false);
+    }, REFRESH_INTERVAL);
+
     return () => clearInterval(refreshTimer);
   }, []);
 
@@ -35,18 +56,72 @@ export default function Drinks() {
       }}
     >
       <div
-        className="container-fluid"
+        className="container-fluid d-flex flex-column justify-content-center"
         style={{
           height: "100%",
           padding: "clamp(0.3rem, 0.5vw, 0.8rem)",
         }}
       >
-        {drinks.length === 0 ? (
+        {/* 1. LOADING (YUKLANISH) EKRANI */}
+        {loading ? (
+          <div className="text-center w-100">
+            <div
+              className="spinner-border text-warning"
+              role="status"
+              style={{ width: "3.5rem", height: "3.5rem", borderWidth: "5px" }}
+            >
+              <span className="visually-hidden">Yuklanmoqda...</span>
+            </div>
+            <div
+              style={{
+                fontSize: "clamp(1.2rem, 3vw, 2rem)",
+                color: "#94a3b8",
+                marginTop: "1.5rem",
+              }}
+            >
+              Ichimliklar roʻyxati yuklanmoqda...
+            </div>
+          </div>
+        ) : /* 2. XATOLIK EKRANI */
+        error ? (
+          <div className="text-center w-100 px-3">
+            <div
+              style={{
+                fontSize: "clamp(1.5rem, 4vw, 2.5rem)",
+                color: "#ef4444",
+                fontWeight: "bold",
+                marginBottom: "1rem",
+              }}
+            >
+              ⚠️ Xatolik yuz berdi
+            </div>
+            <div
+              style={{
+                fontSize: "clamp(1rem, 2vw, 1.3rem)",
+                color: "#cbd5e1",
+                marginBottom: "2rem",
+              }}
+            >
+              {error}
+            </div>
+            <button
+              onClick={() => loadDrinks(true)}
+              className="btn btn-warning btn-lg px-4"
+              style={{
+                borderRadius: "12px",
+                fontWeight: "bold",
+                fontSize: "1.1rem",
+              }}
+            >
+              Qayta urinish
+            </button>
+          </div>
+        ) : /* 3. ICHIMLIKLAR BO'SH BO'LGAN HOLAT */
+        drinks.length === 0 ? (
           <div
-            className="text-center"
+            className="text-center w-100"
             style={{
               fontSize: "clamp(1.5rem, 4vw, 2.5rem)",
-              marginTop: "10vh",
               color: "#f87171",
               padding: "0 1rem",
             }}
@@ -54,6 +129,7 @@ export default function Drinks() {
             Hali ichimlik tanlanmagan
           </div>
         ) : (
+          /* 4. ASOSIY MA'LUMOTLAR GRIDI */
           <div
             className="h-100"
             style={{
@@ -94,7 +170,7 @@ export default function Drinks() {
                   ></div>
 
                   {/* IMAGE */}
-                  <div style={{ overflow: "hidden" }}>
+                  <div style={{ overflow: "hidden", height: "100%" }}>
                     <img
                       src={img}
                       alt={drink.name}
@@ -103,8 +179,14 @@ export default function Drinks() {
                         height: "100%",
                         objectFit: "cover",
                       }}
+                      // Rasm yuklanmay qolsa, kartani buzib yubormasligi uchun placeholder rasm
+                      onError={(e) => {
+                        e.target.src =
+                          "https://placehold.co/600x400/1f2937/ffffff?text=Rasm+Mavjud+Emas";
+                      }}
                     />
                   </div>
+
                   {/* TEXTS */}
                   <div
                     className="position-absolute w-100"
@@ -118,7 +200,7 @@ export default function Drinks() {
                     <h3
                       style={{
                         color: "white",
-                        fontSize: "clamp(1.1rem, 1.55vw, 1.5rem)", // yana + biroz kattalashtirildi
+                        fontSize: "clamp(1.1rem, 1.55vw, 1.5rem)",
                         margin: 0,
                         fontWeight: "bold",
                         textShadow: "0px 0px 6px black",
@@ -149,7 +231,7 @@ export default function Drinks() {
                           style={{
                             color: "white",
                             fontWeight: "900",
-                            fontSize: "clamp(1.1rem, 1.55vw, 1.5rem)", // yana + biroz kattalashtirildi
+                            fontSize: "clamp(1.1rem, 1.55vw, 1.5rem)",
                             whiteSpace: "nowrap",
                             display: "inline-block",
                           }}

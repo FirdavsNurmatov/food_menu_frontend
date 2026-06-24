@@ -1,143 +1,3 @@
-// import { useEffect, useState } from "react";
-// import "bootstrap/dist/css/bootstrap.min.css";
-
-// const BASE_URL = import.meta.env.VITE_BASE_URL || "http://84.54.118.39:3007";
-// const REFRESH_INTERVAL = 30000; // 30 soniya
-
-// export default function Foods() {
-//   const [foods, setFoods] = useState([]);
-
-//   const loadFoods = async () => {
-//     try {
-//       const today = new Date().toISOString().split("T")[0];
-//       const res = await fetch(`${BASE_URL}/foods/${today}`);
-//       if (!res.ok) throw new Error("Serverdan ma'lumot olinmadi");
-
-//       const parsedData = await res.json();
-//       const data = parsedData.map((item) => item.food);
-//       setFoods(data);
-//     } catch (error) {
-//       console.error("❌ Ma'lumot olishda xatolik:", error);
-//       setFoods([]);
-//     }
-//   };
-
-//   useEffect(() => {
-//     loadFoods();
-//     const refreshTimer = setInterval(loadFoods, REFRESH_INTERVAL);
-//     return () => clearInterval(refreshTimer);
-//   }, []);
-
-//   return (
-//     <div
-//       className="container-fluid p-3"
-//       style={{
-//         backgroundImage: "url('/bg.jpg')",
-//         backgroundSize: "cover",
-//         backgroundPosition: "center",
-//         overflow: "hidden",
-//         height: "100vh",
-//         backgroundColor: "#f2f2f2",
-//       }}
-//     >
-//       {foods.length === 0 ? (
-//         <div
-//           className="text-center text-danger"
-//           style={{ fontSize: "2vw", marginTop: "10vh" }}
-//         >
-//           Hali taom tanlanmagan
-//         </div>
-//       ) : (
-//         <div
-//           className="d-grid justify-content-center align-items-center"
-//           style={{
-//             height: "100%",
-//             gridTemplateColumns: "repeat(5, 1fr)",
-//             gridTemplateRows: `repeat(${Math.ceil(foods.length / 5)}, 1fr)`,
-//             gap: "1vh",
-//           }}
-//         >
-//           {foods.map((food) => {
-//             const imageUrl = food.image?.startsWith("http")
-//               ? food.image
-//               : `${BASE_URL}/uploads/foods/${food.image}`;
-
-//             return (
-//               <div
-//                 key={food.id}
-//                 className="card border-2 shadow-sm"
-//                 style={{
-//                   width: "100%",
-//                   height: "100%",
-//                   border: "2px solid #e0e0e0",
-//                   borderRadius: "1.5rem",
-//                   overflow: "hidden",
-//                   display: "flex",
-//                   flexDirection: "column",
-//                 }}
-//               >
-//                 {food.image && (
-//                   <img
-//                     src={imageUrl}
-//                     style={{
-//                       width: "100%",
-//                       height: "40%",
-//                       objectFit: "cover",
-//                     }}
-//                   />
-//                 )}
-//                 <div
-//                   className="card-body d-flex flex-column justify-content-between align-items-center text-center"
-//                   style={{ height: "40%", padding: "0" }}
-//                 >
-//                   {/* 🔹 Taom nomi */}
-//                   {food.name.split(" ").length > 2 ? (
-//                     <h5
-//                       className="fw-semibold mb-1"
-//                       style={{
-//                         fontSize: "clamp(14px, 2vw, 28px)", // avtomatik fit bo‘ladi
-//                         color: "#212529",
-//                         textAlign: "center",
-//                         wordBreak: "break-word",
-//                       }}
-//                     >
-//                       {food.name}
-//                     </h5>
-//                   ) : (
-//                     <h5
-//                       className="fw-semibold mb-1"
-//                       style={{
-//                         fontSize: "2.1vw",
-//                         color: "#212529",
-//                         textAlign: "center",
-//                         wordBreak: "break-word",
-//                       }}
-//                     >
-//                       {food.name}
-//                     </h5>
-//                   )}
-
-//                   {/* 🔹 Narxi */}
-//                   <p
-//                     className="mb-0 fw-bold position-absolute bottom-0"
-//                     style={{
-//                       fontSize: "2.7vw",
-//                       color: "#003975ff",
-//                       textAlign: "center",
-//                     }}
-//                   >
-//                     {food.price?.toLocaleString()} {"сўм"}
-//                   </p>
-//                 </div>
-//               </div>
-//             );
-//           })}
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
 import { useEffect, useState } from "react";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL || "http://84.54.118.39:3007";
@@ -145,26 +5,53 @@ const REFRESH_INTERVAL = 30000; // 30s
 
 export default function Foods() {
   const [foods, setFoods] = useState([]);
+  const [loading, setLoading] = useState(true); // Dastlabki yuklanish holati
+  const [error, setError] = useState(null); // Xatolik xabari uchun
 
-  const loadFoods = async () => {
+  const loadFoods = async (showLoadingAnimation = false) => {
+    // Agar bu birinchi yuklanish yoki "Qayta urinish" bo'lsa, loading ko'rsatamiz.
+    // Har 30 soniyada orqada yangilanganda foydalanuvchiga xalaqit bermaslik uchun shunday qilindi.
+    if (showLoadingAnimation) setLoading(true);
+
     try {
-      const today = new Date().toISOString().split("T")[0];
+      // Foydalanuvchi qurilmasi qayerda bo'lishidan qat'iy nazar, Toshkent vaqti bilan yyyy-mm-dd formatida oladi
+      // en-CA formati har doim "YYYY-MM-DD" ko'rinishida matn qaytaradi.
+      const today = new Date().toLocaleDateString("en-CA", {
+        timeZone: "Asia/Tashkent",
+      });
       const res = await fetch(`${BASE_URL}/foods/${today}`);
-      if (!res.ok) throw new Error("Serverdan maʼlumot olinmadi");
+
+      if (!res.ok) {
+        throw new Error(`Server xatosi: ${res.status}. Maʼlumot olinmadi.`);
+      }
 
       const parsedData = await res.json();
       const data = parsedData.map((item) => item.food);
+
       setFoods(data);
-      // setFoods(data.s0plice(0, 10));
+      setError(null); // Agar muvaffaqiyatli bo'lsa, eski xatolarni tozalaymiz
     } catch (err) {
       console.error("Xatolik:", err);
-      setFoods([]);
+      // Foydalanuvchiga tushunarli xabar
+      setError(
+        err.message === "Failed to fetch"
+          ? "Internet bilan aloqa uzildi. Serverga ulanib bo'lmadi."
+          : err.message,
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    loadFoods();
-    const t = setInterval(loadFoods, REFRESH_INTERVAL);
+    // Birinchi marta yuklanayotganda loader ko'rinishi uchun true uzatamiz
+    loadFoods(true);
+
+    const t = setInterval(() => {
+      // Har 30 soniyada orqa fonda jimgina yangilaydi (ekranni qotirmasdan)
+      loadFoods(false);
+    }, REFRESH_INTERVAL);
+
     return () => clearInterval(t);
   }, []);
 
@@ -176,27 +63,82 @@ export default function Foods() {
         overflow: "hidden",
       }}
     >
-      {/* ==================== GRID ==================== */}
+      {/* ==================== MAIN CONTAINER ==================== */}
       <div
-        className="container-fluid"
+        className="container-fluid d-flex flex-column justify-content-center"
         style={{
           height: "100%",
           padding: "clamp(0.3rem, 0.5vw, 0.8rem)",
         }}
       >
-        {foods.length === 0 ? (
+        {/* 1. LOADING HOLATI */}
+        {loading ? (
+          <div className="text-center w-100">
+            <div
+              className="spinner-border text-warning"
+              role="status"
+              style={{ width: "3.5rem", height: "3.5rem", borderWidth: "5px" }}
+            >
+              <span className="visually-hidden">Yuklanmoqda...</span>
+            </div>
+            <div
+              style={{
+                fontSize: "clamp(1.2rem, 3vw, 2rem)",
+                color: "#94a3b8",
+                marginTop: "1.5rem",
+              }}
+            >
+              Taomlar roʻyxati yuklanmoqda...
+            </div>
+          </div>
+        ) : /* 2. XATOLIK HOLATI */
+        error ? (
+          <div className="text-center w-100 px-3">
+            <div
+              style={{
+                fontSize: "clamp(1.5rem, 4vw, 2.5rem)",
+                color: "#ef4444",
+                fontWeight: "bold",
+                marginBottom: "1rem",
+              }}
+            >
+              ⚠️ Xatolik yuz berdi
+            </div>
+            <div
+              style={{
+                fontSize: "clamp(1rem, 2vw, 1.3rem)",
+                color: "#cbd5e1",
+                marginBottom: "2rem",
+              }}
+            >
+              {error}
+            </div>
+            <button
+              onClick={() => loadFoods(true)}
+              className="btn btn-warning btn-lg px-4"
+              style={{
+                borderRadius: "12px",
+                fontWeight: "bold",
+                fontSize: "1.1rem",
+              }}
+            >
+              Qayta urinish
+            </button>
+          </div>
+        ) : /* 3. TAOMLAR BO'SHOQLIK HOLATI */
+        foods.length === 0 ? (
           <div
-            className="text-center"
+            className="text-center w-100"
             style={{
               fontSize: "clamp(1.5rem, 4vw, 2.5rem)",
-              marginTop: "10vh",
               color: "#f87171",
               padding: "0 1rem",
             }}
           >
-            Hali taom tanlanmagan
+            Bugun uchun hali taom tanlanmagan
           </div>
         ) : (
+          /* 4. MA'LUMOTLAR MUVAFFAQIYATLI YUKLANGANDAGI GRID */
           <div
             className="h-100"
             style={{
@@ -237,7 +179,7 @@ export default function Foods() {
                   ></div>
 
                   {/* IMAGE */}
-                  <div style={{ overflow: "hidden" }}>
+                  <div style={{ overflow: "hidden", height: "100%" }}>
                     <img
                       src={img}
                       alt={food.name}
@@ -245,6 +187,11 @@ export default function Foods() {
                         width: "100%",
                         height: "100%",
                         objectFit: "cover",
+                      }}
+                      // Rasm yuklana olmay qolsa fallback placeholder rasm qo'yish (ixtiyoriy)
+                      onError={(e) => {
+                        e.target.src =
+                          "https://placehold.co/600x400/1f2937/ffffff?text=Rasm+Mavjud+Emas";
                       }}
                     />
                   </div>
@@ -259,36 +206,10 @@ export default function Foods() {
                         "clamp(0.4rem, 0.6vw, 0.7rem) clamp(0.6rem, 0.8vw, 1rem) clamp(0.4rem, 0.6vw, 0.7rem)",
                     }}
                   >
-                    {/* {food.name.split(" ").length > 2 ? (
-                      <h3
-                        style={{
-                          color: "white",
-                          fontSize: "2rem",
-                          margin: 0,
-                          fontWeight: "bold",
-                          textShadow: "0px 0px 6px black",
-                        }}
-                      >
-                        {food.name}
-                      </h3>
-                    ) : (
-                      <h3
-                        style={{
-                          color: "white",
-                          fontSize: "2rem",
-                          margin: 0,
-                          fontWeight: "bold",
-                          textShadow: "0px 0px 6px black",
-                        }}
-                      >
-                        {food.name}
-                      </h3>
-                    )} */}
-
                     <h3
                       style={{
                         color: "white",
-                        fontSize: "clamp(1.1rem, 1.55vw, 1.5rem)", // yana + biroz kattalashtirildi
+                        fontSize: "clamp(1.1rem, 1.55vw, 1.5rem)",
                         margin: 0,
                         fontWeight: "bold",
                         textShadow: "0px 0px 6px black",
@@ -319,7 +240,7 @@ export default function Foods() {
                           style={{
                             color: "white",
                             fontWeight: "900",
-                            fontSize: "clamp(1.1rem, 1.55vw, 1.5rem)", // yana + biroz kattalashtirildi
+                            fontSize: "clamp(1.1rem, 1.55vw, 1.5rem)",
                             whiteSpace: "nowrap",
                             display: "inline-block",
                           }}
