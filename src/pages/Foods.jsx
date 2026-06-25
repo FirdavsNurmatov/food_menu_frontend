@@ -152,7 +152,7 @@ export default function Foods() {
             {foods.slice(0, 20).map((food) => {
               const img = food.image?.startsWith("http")
                 ? food.image
-                : `${BASE_URL}/uploads/foods/${food.image}`;
+                : `${BASE_URL}/uploads/foods/${food.image}?v=${food.id}`;
 
               return (
                 <div
